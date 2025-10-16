@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>التصويت على الألوان</title>
+  <style>
+    body {
+      background-color: #000;
+      color: orange;
+      font-family: "Cairo", sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .color-option {
+      display: inline-block;
+      background-color: #111;
+      border: 2px solid orange;
+      color: orange;
+      border-radius: 10px;
+      padding: 15px 30px;
+      margin: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .color-option:hover {
+      background-color: orange;
+      color: black;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+    }
+
+    .bar {
+      width: 200px;
+      height: 15px;
+      background-color: #222;
+      border: 1px solid orange;
+      margin: 10px auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .bar-inner {
+      height: 100%;
+      background-color: orange;
+      width: 0%;
+      transition: width 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎨 اختر لونك المفضل!</h1>
+
+  <div class="color-option" onclick="vote('برتقالي')">🟧 برتقالي</div>
+  <div class="color-option" onclick="vote('أسود')">⬛ أسود</div>
+  <div class="color-option" onclick="vote('أزرق')">🟦 أزرق</div>
+  <div class="color-option" onclick="vote('أحمر')">🟥 أحمر</div>
+
+  <div class="result">
+    <h2>النتائج:</h2>
+    <div>🟧 برتقالي: <span id="orangeVotes">0</span> صوت</div>
+    <div class="bar"><div id="orangeBar" class="bar-inner"></div></div>
+
+    <div>⬛ أسود: <span id="blackVotes">0</span> صوت</div>
+    <div class="bar"><div id="blackBar" class="bar-inner"></div></div>
+
+    <div>🟦 أزرق: <span id="blueVotes">0</span> صوت</div>
+    <div class="bar"><div id="blueBar" class="bar-inner"></div></div>
+
+    <div>🟥 أحمر: <span id="redVotes">0</span> صوت</div>
+    <div class="bar"><div id="redBar" class="bar-inner"></div></div>
+  </div>
+
+  <script>
+    let votes = {
+      برتقالي: 0,
+      أسود: 0,
+      أزرق: 0,
+      أحمر: 0
+    };
+
+    function vote(color) {
+      votes[color]++;
+      localStorage.setItem("votes", JSON.stringify(votes));
+      updateResults();
+    }
+
+    function updateResults() {
+      for (let color in votes) {
+        document.getElementById(
+          color === "برتقالي" ? "orangeVotes" :
+          color === "أسود" ? "blackVotes" :
+          color === "أزرق" ? "blueVotes" :
+          "redVotes"
+        ).textContent = votes[color];
+      }
+
+      const total =
+        votes["برتقالي"] + votes["أسود"] + votes["أزرق"] + votes["أحمر"];
+
+      document.getElementById("orangeBar").style.width =
+        (votes["برتقالي"] / total) * 100 + "%";
+      document.getElementById("blackBar").style.width =
+        (votes["أسود"] / total) * 100 + "%";
+      document.getElementById("blueBar").style.width =
+        (votes["أزرق"] / total) * 100 + "%";
+      document.getElementById("redBar").style.width =
+        (votes["أحمر"] / total) * 100 + "%";
+    }
+
+    window.onload = function () {
+      const saved = localStorage.getItem("votes");
+      if (saved) votes = JSON.parse(saved);
+      updateResults();
+    };
+  </script>
+</body>
+</html>

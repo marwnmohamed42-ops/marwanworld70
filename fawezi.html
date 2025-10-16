@@ -1,0 +1,153 @@
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>فوازير مروان</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background-color: black;
+      color: orange;
+      text-align: center;
+      font-family: "Cairo", sans-serif;
+      direction: rtl;
+      padding: 40px;
+    }
+
+    #quiz-box {
+      background-color: #111;
+      border: 2px solid orange;
+      border-radius: 15px;
+      padding: 30px;
+      width: 70%;
+      margin: auto;
+      box-shadow: 0 0 20px orange;
+    }
+
+    button {
+      background-color: orange;
+      border: none;
+      color: black;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: black;
+      color: orange;
+      border: 1px solid orange;
+      transform: scale(1.1);
+    }
+
+    .correct {
+      background-color: #00cc00 !important;
+      color: white !important;
+    }
+
+    .wrong {
+      background-color: red !important;
+      color: white !important;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 فوازير مروان 🔥</h1>
+  <div id="quiz-box">
+    <h2 id="question"></h2>
+    <div id="options"></div>
+    <h3 id="result"></h3>
+  </div>
+
+  <audio id="correctSound" src="correct.mp3.m4a"></audio>
+  <audio id="wrongSound" src="wrong.mp3.mp3"></audio>
+
+  <script>
+    const riddles = [
+      { q: "شيء يمشي بلا رجلين ولا يدخل إلا بالأذنين، فما هو؟", a: "الصوت", options: ["النور", "الهواء", "الصوت"] },
+      { q: "ما هو الشيء الذي تأكل منه ولا يؤكل؟", a: "الطبق", options: ["المعلقة", "الطبق", "السكين"] },
+      { q: "ما هو الشيء الذي إذا كثر أضر وإذا قل نفع؟", a: "الماء", options: ["المال", "الماء", "النوم"] },
+      { q: "له أوراق وما هو نبات، له جلد وما هو حيوان، يعلم ولا هو إنسان، فما هو؟", a: "الكتاب", options: ["الكتاب", "الدفتر", "الهاتف"] },
+      { q: "شيء كلما أخذت منه كبر، فما هو؟", a: "الحفرة", options: ["العمر", "الحفرة", "البيت"] },
+      { q: "شيء نراه ولا نستطيع لمسه، أول حرفين منه قتْل وآخر حرفين منه شيء نأكله؟", a: "السماء", options: ["السماء", "الماء", "الضوء"] },
+      { q: "إذا كان الأمس غد فاليوم ماذا؟", a: "الجمعة", options: ["الخميس", "الجمعة", "السبت"] },
+      { q: "شيء اسمه على لونه؟", a: "البرتقال", options: ["البرتقال", "الذهب", "الفحم"] },
+      { q: "له عين ولا يرى؟", a: "الإبرة", options: ["الإبرة", "الإعصار", "النافورة"] },
+      { q: "شيء يدخل الماء ولا يبتل؟", a: "الظل", options: ["السمك", "الظل", "الورق"] },
+      { q: "ما هو الشيء الذي يكتب ولا يقرأ؟", a: "القلم", options: ["الكتاب", "القلم", "الكمبيوتر"] },
+      { q: "شيء إذا تكلمتَ به انكسر؟", a: "الصمت", options: ["الصمت", "الكأس", "القلب"] },
+      { q: "ما هو الشيء الذي يجري ولا يمشي؟", a: "الماء", options: ["الهواء", "الماء", "الوقت"] },
+      { q: "له أسنان ولا يعض؟", a: "المشط", options: ["المشط", "السكين", "المنشار"] },
+      { q: "ما الشيء الذي يسمع بلا أذن ويتكلم بلا لسان؟", a: "الهاتف", options: ["الهاتف", "التلفاز", "الكمبيوتر"] },
+      { q: "كلما أخذت منه زاد؟", a: "العمر", options: ["المال", "العمر", "الوقت"] },
+      { q: "شيء تذبحه وتبكي عليه؟", a: "البصل", options: ["البصل", "الدجاج", "السمك"] },
+      { q: "ما هو الشيء الذي يرفع ولا يُرى؟", a: "الصوت", options: ["الريح", "الصوت", "العلم"] },
+      { q: "شيء لا يمشي إلا بالضرب؟", a: "المسمار", options: ["المسمار", "الكرة", "الساعة"] },
+      { q: "ما الشيء الذي إذا دخل الماء مات؟", a: "الملح", options: ["الملح", "النار", "الكهرباء"] },
+      { q: "شيء في السماء وليس في الماء؟", a: "حرف السين", options: ["القمر", "الغيوم", "حرف السين"] },
+      { q: "له رقبة بلا رأس؟", a: "الزجاجة", options: ["الزجاجة", "القميص", "المزهرية"] },
+      { q: "ما هو الشيء الذي تحمله ويحملك؟", a: "الحذاء", options: ["السيارة", "الحذاء", "الكرسي"] },
+      { q: "شيء كلما غسلته اتسخ؟", a: "الماء", options: ["الماء", "الصابون", "المنديل"] },
+      { q: "يكتب ولا يفهم؟", a: "القلم", options: ["الكتاب", "القلم", "الحاسوب"] },
+      { q: "ما الشيء الذي يقرصك ولا تراه؟", a: "البرد", options: ["البرد", "الريح", "الظلام"] },
+      { q: "شيء له بداية وليس له نهاية؟", a: "الدائرة", options: ["الدائرة", "الحلقة", "الطريق"] },
+      { q: "شيء يزيد ولا ينقص؟", a: "العمر", options: ["العمر", "المال", "الماء"] },
+      { q: "شيء نأكله قبل أن يولد؟", a: "البيض", options: ["البيض", "السمك", "الدجاج"] },
+      { q: "ما الشيء الذي إن لمسته صرخ؟", a: "الجرس", options: ["الجرس", "الطفل", "الهاتف"] }
+    ];
+
+    let index = 0;
+    const qBox = document.getElementById("question");
+    const optionsDiv = document.getElementById("options");
+    const result = document.getElementById("result");
+    const correctSound = document.getElementById("correctSound");
+    const wrongSound = document.getElementById("wrongSound");
+
+    function loadQuestion() {
+      result.textContent = "";
+      qBox.textContent = riddles[index].q;
+      optionsDiv.innerHTML = "";
+      riddles[index].options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(btn, opt);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(btn, answer) {
+      const correct = riddles[index].a;
+      const buttons = document.querySelectorAll("#options button");
+      buttons.forEach(b => b.disabled = true);
+
+      if (answer === correct) {
+        btn.classList.add("correct");
+        result.textContent = "إجابة صحيحة ✅";
+        correctSound.play();
+      } else {
+        btn.classList.add("wrong");
+        result.textContent = "غلط ❌ الإجابة الصحيحة: " + correct;
+        wrongSound.play();
+      }
+
+      setTimeout(() => {
+        index++;
+        if (index < riddles.length) loadQuestion();
+        else result.textContent = "🎉 خلصت كل الفوازير! أحسنت 👏";
+      }, 2000);
+    }
+
+    loadQuestion();
+  </script>
+
+</body>
+</html>

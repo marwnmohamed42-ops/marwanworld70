@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لعبة XO - مروان وورلد</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: black;
+      color: orange;
+      text-align: center;
+      font-family: 'Cairo', sans-serif;
+      margin-top: 100px;
+    }
+    h1 {
+      margin-bottom: 40px;
+      font-size: 32px;
+    }
+    .choice-btn {
+      display: block;
+      margin: 20px auto;
+      background-color: orange;
+      color: black;
+      border: none;
+      padding: 15px 25px;
+      font-size: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 250px;
+    }
+    .choice-btn:hover {
+      background-color: black;
+      color: orange;
+      border: 2px solid orange;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>اختر طريقة اللعب 🎮</h1>
+
+  <button class="choice-btn" onclick="window.location.href='xo_ai.html'">🧠 ضد الذكاء الاصطناعي</button>
+  <button class="choice-btn" onclick="window.location.href='xo_friend.html'">👬 مع صديق</button>
+
+</body>
+</html>

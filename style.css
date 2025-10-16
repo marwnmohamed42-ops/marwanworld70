@@ -1,0 +1,288 @@
+body {
+  background-color: #000000;
+  color: orange;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 100px;
+}
+
+h1 {
+  font-size: 40px;
+}
+.my-photo {
+  width:  300px;      /* عرض الصورة */
+  height: 200px;     /* طول الصورة */
+  border-radius: 60%; /* تخليها دايرة */
+  border: 3px solid rgb(0, 0, 0); /* إطار برتقالي */
+  object-fit: cover; /* تخلي الصورة متناسقة */
+  box-shadow: 0 0 10px #00000055; /* ظل خفيف */
+}
+.my-photo {
+  width: 250px;
+  height: auto;
+  border-radius: 50%;
+  border: 8 solid orange;
+  margin-top: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.my-photo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px orange;
+}
+.my-name {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 15px;
+  background: linear-gradient(90deg, orange, #ff6600);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+/* ====== لوجو الموقع ====== */
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(255, 165, 0, 0.3);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid rgb(0, 0, 0);
+  object-fit: cover;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(90deg, orange, #ff6600);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+/* ====== شريط التنقل ====== */
+.navbar {
+  margin-left: auto;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  color: orange;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px orange;
+}
+/* ====== تواصل معنا ====== */
+.contact {
+  margin-top: 80px;
+  padding: 50px 20px;
+  background-color: #111;
+  color: orange;
+  text-align: center;
+  border-top: 2px solid orange;
+}
+
+.contact h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.social a {
+  color: rgb(178, 138, 63);
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.social a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px orange;
+}
+.pw-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+.pw-box{background:rgba(18,18,18,0.95);border:2px solid #ffb400;padding:28px;border-radius:14px;width:330px;color:#ffd966;text-align:center;box-shadow:0 6px 30px rgba(255,180,0,0.06)}
+.pw-top{display:flex;flex-direction:column;align-items:center;gap:6px}
+.pw-top .lock{font-size:36px}
+.pw-top h2{margin:0;color:#ffdb7a}
+.pw-form{margin-top:14px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.pw-form input{width:85%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#ffd966;text-align:center}
+.pw-form button{padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
+#toggleBtn{background:transparent;color:#ffdb7a;border:1px solid #333;width:85%}
+#enterBtn{background:#ffb400;color:#000;width:85%;font-weight:700}
+.pw-error{color:#ff6b6b;height:18px;margin:4px 0 0}
+/* زر واتساب ثابت */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffb400;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.whatsapp-btn img {
+  width: 35px;
+  height: 35px;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+}
+.sound-box {
+  background-color: #000;
+  color: #ff8000;
+  border: 2px solid #ff8000;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  width: 80%;
+  margin: 40px auto;
+  box-shadow: 0 0 15px #ff8000;
+}
+
+.sound-box h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #ff8000;
+}
+
+audio {
+  width: 100%;
+  border-radius: 10px;
+  outline: none;
+}
+{body {
+  background-color: black;
+  color: orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+}
+
+.typing-container {
+  text-align: center;
+}
+
+#typing-text {
+  font-size: 2em;
+  border-right: 3px solid orange;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}}
+.quiz-btn {
+  background-color: orange;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.quiz-btn:hover {
+  background-color: black;
+  color: orange;
+  transform: scale(1.05);
+}
+.btn {
+  display: inline-block;
+  background-color: #ff8c00;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-size: 18px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #ffb347;
+  transform: scale(1.05);
+}
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #ff8c00;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 18px;
+  transition: 0.3s;
+}
+.btn:hover {
+  background-color: #ffa64d;
+  transform: scale(1.05);
+}
+.button-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn {
+  background-color: orange;
+  color: black;
+  padding: 15px 30px;
+  border-radius: 15px;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: black;
+  color: orange;
+}

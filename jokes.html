@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نكت مضحكة - اختبار</title>
+  <style>
+    body { background:#111; color:#ffa500; font-family:"Cairo",sans-serif; text-align:center; padding:40px; }
+    #joke-box { background:#222; padding:20px; border-radius:12px; min-height:120px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; box-shadow:0 0 12px #ff8c00; }
+    .controls { margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    button { background:#ff8c00; color:#000; border:none; padding:10px 18px; border-radius:10px; font-weight:700; cursor:pointer; }
+    button:hover { background:#ffb347; transform:translateY(-3px); }
+  </style>
+</head>
+<body>
+
+  <h1>🤣 نكت مضحكة — موقع مروان</h1>
+
+  <div id="joke-box">اضغط "نكتة جديدة" لتظهر النكتة هنا</div>
+
+  <div class="controls">
+    <button id="newJokeBtn">🎭 نكتة جديدة</button>
+    <button id="copyBtn">📋 نسخ النكتة</button>
+  </div>
+
+  <script>
+    // مصفوفة النكت (يمكن تضيف أو تعدل هنا)
+    const jokes = [
+      "واحد بخيل جدًا دخل محل موبايلات قال عندكم بلوتوث مستعمل؟",
+      "مرة واحد راح للدكتور بيقول له كل ما أشرب شاي بحس بوجع، قاله شيل المعلقة!",
+      "مدرس رياضيات خلف ولد سماه (ناتج).",
+      "مرة واحد اشترى تلفزيون ذكي، التلفزيون ابتدأ يحكم عليه!",
+      "واحد راح الخباز قاله: عايز رغيف! الخباز قاله: عندنا عيش وبس.",
+      "مرة واحد نام في الثلاجة عشان يحلم إنه في القطب الشمالي.",
+      "مرة واحد دخل امتحان فاضي، كتب: 'رجاءً أعد الامتحان السنة الجاية'.",
+      "واحد قال لصاحبه: أنا حافظ القرآن كله — صاحبه قاله: طيب ورينا حفظك لآخر صفحة!"
+    ];
+
+    // عناصر DOM
+    const jokeBox = document.getElementById('joke-box');
+    const newJokeBtn = document.getElementById('newJokeBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    // وظيفة إظهار نكتة عشوائية
+    function showRandomJoke() {
+      const idx = Math.floor(Math.random() * jokes.length);
+      jokeBox.textContent = jokes[idx];
+      // خزن آخر نكتة لميزة النسخ
+      window._lastJoke = jokes[idx];
+    }
+
+    // ربط الأزرار بالمستمعين (آمن وموثوق)
+    newJokeBtn.addEventListener('click', showRandomJoke);
+
+    copyBtn.addEventListener('click', () => {
+      if (!window._lastJoke) {
+        alert('اضغط "نكتة جديدة" أولاً.');
+        return;
+      }
+      navigator.clipboard.writeText(window._lastJoke)
+        .then(() => alert('تم نسخ النكتة إلى الحافظة 👍'))
+        .catch(() => alert('النسخ غير متاح في متصفحك'));
+    });
+
+    // إمكانية تجربة الوظيفية من الكونسول لو احتجت
+    window.showRandomJoke = showRandomJoke;
+  </script>
+
+</body>
+</html>

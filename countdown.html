@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>العد التنازلي</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #ff7b00;
+      font-family: "Cairo", sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    input {
+      background: #111;
+      color: #ff7b00;
+      text-align: center;
+    }
+    button {
+      background-color: #ff7b00;
+      color: #000;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #ffa53d;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>العد التنازلي</h1>
+  <p>اختار التاريخ اللي عايز تعرف باقي عليه:</p>
+  <input type="date" id="targetDate" />
+  <button onclick="calculateCountdown()">احسب</button>
+  <div id="result"></div>
+
+  <script>
+    function calculateCountdown() {
+      const targetDate = new Date(document.getElementById('targetDate').value);
+      const today = new Date();
+      const diff = targetDate - today;
+      
+      if (isNaN(targetDate)) {
+        document.getElementById('result').innerText = 'من فضلك اختار تاريخ صحيح!';
+        return;
+      }
+
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+      if (days > 0) {
+        document.getElementById('result').innerText = باقي ${days} يوم على التاريخ اللي اخترته 🔥;
+      } else if (days === 0) {
+        document.getElementById('result').innerText = 'النهارده هو اليوم اللي اخترته 🎉';
+      } else {
+        document.getElementById('result').innerText = عدى ${Math.abs(days)} يوم من التاريخ اللي اخترته ⏳;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لعبة XO مع صديقي</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #ffa500;
+      font-family: "Cairo", sans-serif;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 2em;
+      color: #ffa500;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 10px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      background-color: #222;
+      color: #ffa500;
+      font-size: 2.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .cell:hover {
+      background-color: #333;
+    }
+    .cell.taken {
+      cursor: not-allowed;
+    }
+    #status {
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+    #reset {
+      margin-top: 20px;
+      background-color: #ffa500;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #reset:hover {
+      background-color: #ffb733;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎮 لعبة XO - مع صديقي</h1>
+  <div class="board" id="board"></div>
+  <div id="status">دور اللاعب: <span id="turn">X</span></div>
+  <button id="reset">إعادة اللعب 🔄</button>
+
+  <script>
+    const board = document.getElementById("board");
+    const status = document.getElementById("status");
+    const turnText = document.getElementById("turn");
+    const resetBtn = document.getElementById("reset");
+
+    let currentPlayer = "X";
+    let gameActive = true;
+    let cells = Array(9).fill("");
+
+    function renderBoard() {
+      board.innerHTML = "";
+      cells.forEach((value, index) => {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.textContent = value;
+        if (value !== "") cell.classList.add("taken");
+        cell.addEventListener("click", () => handleClick(index));
+        board.appendChild(cell);
+      });
+    }
+
+    function handleClick(index) {
+      if (!gameActive || cells[index] !== "") return;
+
+      cells[index] = currentPlayer;
+      renderBoard();
+
+      if (checkWinner()) {
+        status.innerHTML = 🎉 اللاعب ${currentPlayer} فاز!;
+        gameActive = false;
+        return;
+      }
+
+      if (!cells.includes("")) {
+        status.innerHTML = "🤝 تعادل!";
+        gameActive = false;
+        return;
+      }
+
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      turnText.textContent = currentPlayer;
+    }
+
+    function checkWinner() {
+      const winPatterns = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return winPatterns.some(pattern => {
+        const [a,b,c] = pattern;
+        return cells[a] && cells[a] === cells[b] && cells[a] === cells[c];
+      });
+    }
+
+    resetBtn.addEventListener("click", () => {
+      cells.fill("");
+      currentPlayer = "X";
+      gameActive = true;
+      status.innerHTML = دور اللاعب: <span id="turn">X</span>;
+      renderBoard();
+    });
+
+    renderBoard();
+  </script>
+
+</body>
+</html>

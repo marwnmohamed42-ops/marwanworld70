@@ -1,0 +1,142 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>marwan world</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>دخول - MarwanWorld</title>
+
+  <style>
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:"Cairo",sans-serif}
+    body{
+      background:#000;
+      color:#ffb400;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* خلفية النار */
+    .scene{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .flame{
+      position:absolute;bottom:-10%;left:50%;transform:translateX(-50%);
+      width:140vmax;height:80vh;filter:blur(40px) saturate(120%);opacity:0.5;
+      animation:rise 6s linear infinite;mix-blend-mode:screen;
+    }
+    .flame:nth-child(1){
+      background: radial-gradient(ellipse at 50% 75%, rgba(255,140,0,0.8) 0%, rgba(255,50,0,0.15) 30%, transparent 55%);
+      animation-duration:5s;opacity:0.5;
+    }
+    .flame:nth-child(2){
+      background: radial-gradient(ellipse at 50% 70%, rgba(255,200,50,0.7) 0%, rgba(255,80,0,0.12) 28%, transparent 50%);
+      animation-duration:6s;opacity:0.45;filter:blur(30px) saturate(140%);
+    }
+    .flame:nth-child(3){
+      background: radial-gradient(ellipse at 50% 80%, rgba(255,60,0,0.65) 0%, rgba(255,140,0,0.06) 25%, transparent 45%);
+      animation-duration:7s;opacity:0.35;filter:blur(60px) saturate(110%);
+    }
+    @keyframes rise{
+      0%{transform:translateX(-50%) translateY(40vh)}
+      50%{transform:translateX(-55%) translateY(10vh)}
+      100%{transform:translateX(-50%) translateY(-10vh)}
+    }
+
+    /* دخان */
+    .smoke{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);width:2000px;height:50vh;z-index:1;mix-blend-mode:screen}
+    .smoke .p{position:absolute;bottom:0;width:180px;height:60px;border-radius:50%;background:radial-gradient(closest-side, rgba(255,255,255,0.15), rgba(255,200,0,0.02));filter:blur(18px);opacity:0.14;animation:puff linear infinite}
+    .p:nth-child(1){left:30%;animation-duration:9s;transform:scale(1.6)}
+    .p:nth-child(2){left:45%;animation-duration:11s;transform:scale(1.1);animation-delay:1.3s}
+    .p:nth-child(3){left:60%;animation-duration:10s;transform:scale(1.4);animation-delay:0.6s}
+    .p:nth-child(4){left:20%;animation-duration:12s;transform:scale(1.25);animation-delay:2s}
+    .p:nth-child(5){left:75%;animation-duration:8s;transform:scale(1.5);animation-delay:0.4s}
+    @keyframes puff{
+      0%{transform:translateY(0) scale(0.6);opacity:0.12}
+      50%{transform:translateY(-25vh) scale(1.1);opacity:0.06}
+      100%{transform:translateY(-45vh) scale(1.6);opacity:0}
+    }
+
+    /* صندوق الدخول */
+    .login-box{
+      position:relative;z-index:10;background:rgba(0,0,0,0.78);
+      border:2px solid rgba(255,160,0,0.95);padding:24px;width:360px;border-radius:12px;
+      text-align:center;box-shadow:0 8px 30px rgba(255,140,0,0.12);color:#ffcc66;
+    }
+    .login-box h2{margin:0 0 12px;color:#ffb84d}
+    .login-box input{
+      width:86%;padding:10px;border-radius:8px;border:2px solid rgba(255,140,0,0.18);
+      background:#111;color:#ffcc66;outline:none;margin-top:12px;text-align:center;
+    }
+    .login-box button{
+      margin-top:14px;background:#ffb400;border:none;color:#000;font-weight:700;
+      padding:10px 20px;border-radius:8px;cursor:pointer;
+    }
+    .err{color:#ff6b6b;height:18px;margin-top:10px}
+
+    @media (max-width:420px){
+      .login-box{width:92%;padding:18px}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- خلفية النار والدخان -->
+  <div class="scene" aria-hidden="true">
+    <div class="flame"></div>
+    <div class="flame"></div>
+    <div class="flame"></div>
+    <div class="smoke">
+      <div class="p"></div>
+      <div class="p"></div>
+      <div class="p"></div>
+      <div class="p"></div>
+      <div class="p"></div>
+    </div>
+  </div>
+
+  <!-- صندوق الدخول -->
+  <div class="login-box" role="main" aria-label="login">
+    <h2>🔒 دخول موقع مروان</h2>
+    <input id="password" type="password" placeholder="أدخل كلمة السر" />
+    <br>
+    <button onclick="checkPassword()">دخول</button>
+    <div class="err" id="err"></div>
+  </div>
+
+  <script>
+    // غيّر كلمة السر هنا لو حبيت
+    const CORRECT = "marwan2009";
+
+    function checkPassword(){
+      const v = document.getElementById('password').value.trim();
+      const e = document.getElementById('err');
+      e.textContent = '';
+      if(!v){ e.textContent = 'أدخل كلمة السر'; return; }
+      if(v === CORRECT){
+        window.location.href = 'home.html';
+      } else {
+        e.textContent = 'كلمة السر غير صحيحة ❌';
+      }
+    }
+
+    document.getElementById('password').addEventListener('keydown', function(ev){
+      if(ev.key === 'Enter') checkPassword();
+    });
+  </script>
+</body>
+</html>
+
+
+
