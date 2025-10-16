@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎲 الزهر - موقع مروان</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #ff7b00;
+      font-family: 'Cairo', sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 40px;
+    }
+
+    .dice {
+      font-size: 150px;
+      margin: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    button {
+      background-color: #ff7b00;
+      color: #000;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.2em;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff9a33;
+      transform: scale(1.1);
+    }
+
+    @keyframes roll {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(90deg); }
+      50% { transform: rotate(180deg); }
+      75% { transform: rotate(270deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 ارمي الزهر 🎲</h1>
+  <div class="dice" id="dice">⚀</div>
+  <button onclick="rollDice()">إرمِ الزهر</button>
+
+  <script>
+    function rollDice() {
+      const dice = document.getElementById('dice');
+      dice.style.animation = 'roll 0.5s';
+      setTimeout(() => {
+        dice.style.animation = '';
+        const random = Math.floor(Math.random() * 6) + 1;
+        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        dice.textContent = diceFaces[random - 1];
+      }, 500);
+    }
+  </script>
+</body>
+</html>
