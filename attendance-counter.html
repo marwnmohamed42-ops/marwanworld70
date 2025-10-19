@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل الغياب والحضور</title>
+    <style>
+        body {
+            background-color: #000;
+            color: orange;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        button {
+            background-color: orange;
+            color: black;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffbd59;
+            transform: scale(1.05);
+        }
+
+        .count-box {
+            font-size: 22px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📘 نظام الغياب والحضور</h1>
+
+    <button onclick="addHodor()">غياب العملي</button>
+    <button onclick="addGheyaab()">غياب النظري</button>
+    <br><br>
+
+    <div class="count-box">
+        عدد غياب العملي: <span id="hodorCount">0</span><br>
+        عدد غياب النظري: <span id="gheyaabCount">0</span>
+    </div>
+
+    <br>
+    
+
+    <script>
+        if (!localStorage.getItem("hodor")) localStorage.setItem("hodor", 0);
+        if (!localStorage.getItem("gheyaab")) localStorage.setItem("gheyaab", 0);
+
+        document.getElementById("hodorCount").textContent = localStorage.getItem("hodor");
+        document.getElementById("gheyaabCount").textContent = localStorage.getItem("gheyaab");
+
+        function addHodor() {
+            let hodor = parseInt(localStorage.getItem("hodor")) + 1;
+            localStorage.setItem("hodor", hodor);
+            document.getElementById("hodorCount").textContent = hodor;
+        }
+
+        function addGheyaab() {
+            let gheyaab = parseInt(localStorage.getItem("gheyaab")) + 1;
+            localStorage.setItem("gheyaab", gheyaab);
+            document.getElementById("gheyaabCount").textContent = gheyaab;
+        }
+
+        function goHome() {
+            window.location.href = "index.html"; // صفحة الهومي
+        }
+    </script>
+
+</body>
+</html>

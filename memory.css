@@ -1,0 +1,68 @@
+body {
+    background-color: #000;
+    color: orange;
+    font-family: "Tajawal", sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.game-board {
+    width: 70%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+    justify-content: center;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    background-color: #222;
+    border: 2px solid orange;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    transition: 0.3s;
+}
+
+.card.flipped {
+    color: orange;
+    background-color: #333;
+}
+
+.card.matched {
+    background-color: #0f0;
+    color: #000;
+    border-color: #0f0;
+}
+
+.back-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: orange;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background-color: #ffa500;
+}

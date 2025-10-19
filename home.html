@@ -63,7 +63,61 @@
  <u><h1>مرحبآ بيك في موقعي!</h1></u>
  <img src="marwan.jpg.jpg" alt="صورة مروان" class="my-photo">
  <h2 class="my-name">Marwan World</h2>
- <h1>7</h1>
+ <h1></h1>
+
+<p></p>
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Button</title>
+    <style>
+        body {
+            background-color: #000; /* خلفية أسود */
+            font-family: "Arial", sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        /* شكل زرار هومي */
+        .home-btn {
+            background-color: orange; /* اللون البرتقالي */
+            color: black; /* لون النص */
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background-color: #ffbd59; /* لون أفتح عند الوقوف */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زرار هومي -->
+    <button class="home-btn" onclick="goHome()">الغياب</button>
+
+    <script>
+        function goHome() {
+            // هنا هتحط الرابط اللي يفتح صفحة الهومي
+            window.location.href = "attendance-counter.html"; 
+        }
+    </script>
+
+</body>
+</html>
+<p></p>
+
+
+
+
 
 
 <button onclick="window.location.href='fawezi.html'" class="quiz-btn">✨  الفوازير ✨</button>
@@ -100,6 +154,47 @@
 <button onclick="window.location.href='dice.html'" class="btn">    🎲 الزهر
 </button>
 <p></p>
+
+<p></p>
+
+ <!-- زر فتح لعبة XO -->
+<div class="button-container">
+  <a href="memory.html" class="btn">🎴 لعبة الذاكرة</a>
+</div>
+
+<p></p>
+
+<button class="home-btn" onclick="window.location.href='guess.html'">🎯 تخمين الرقم</button>
+
+<p></p>
+
+<!-- زر فتح صفحة الواي فاي -->
+<a href="wifi.html">
+    <button class="wifi-btn">Wi-Fi</button>
+</a>
+
+<style>
+    .wifi-btn {
+        background-color: #000;
+        color: #ff6600;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin: 10px;
+    }
+    .wifi-btn:hover {
+        background-color: #ff6600;
+        color: white;
+    }
+</style>
+
+
+
+
+
 
 
 

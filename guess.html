@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تخمين الرقم | Marwan World</title>
+  <style>
+    :root{
+      --bg: #000;
+      --accent: #ff7b00;
+      --card: #111;
+      --text: #ffd9a3;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:var(--bg);
+      color:var(--text);
+      font-family: "Cairo", sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:560px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:2px solid rgba(255,123,0,0.12);
+      border-radius:16px;
+      padding:22px;
+      text-align:center;
+      box-shadow:0 6px 30px rgba(0,0,0,0.6);
+    }
+
+    h1{
+      margin:4px 0 12px;
+      color:var(--accent);
+      font-size:26px;
+    }
+
+    p.lead{
+      margin:0 0 18px;
+      color:var(--text);
+      opacity:0.9;
+    }
+
+    .info {
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+    .info .box{
+      background:var(--card);
+      border:1px solid rgba(255,123,0,0.12);
+      padding:8px 14px;
+      border-radius:10px;
+      color:var(--accent);
+      font-weight:700;
+      min-width:110px;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+
+    input[type="number"]{
+      width:150px;
+      padding:12px 14px;
+      border-radius:10px;
+      border:2px solid rgba(255,123,0,0.12);
+      background:#0b0b0b;
+      color:var(--text);
+      font-size:18px;
+      outline:none;
+      text-align:center;
+    }
+
+    .btn{
+      background:var(--accent);
+      color:#000;
+      border:none;
+      padding:12px 18px;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.18s;
+    }
+    .btn:hover{ transform:translateY(-3px) scale(1.02) }
+
+    .msg{
+      margin-top:12px;
+      min-height:36px;
+      font-size:18px;
+      color:var(--text);
+    }
+
+    .hint-high{ color:#88e07b } /* أخضر خفيف */
+    .hint-low{ color:#ffd27a }  /* برتقالي فاتح */
+    .hint-wrong{ color:#ff8a8a } /* أحمر فاتح */
+
+    .stats{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .stat{
+      background:#0e0e0e;
+      border:1px solid rgba(255,123,0,0.08);
+      padding:8px 12px;
+      border-radius:10px;
+      color:var(--text);
+    }
+
+    .back{
+      display:inline-block;
+      margin-top:18px;
+      text-decoration:none;
+      background:transparent;
+      color:var(--accent);
+      padding:8px 12px;
+      border-radius:10px;
+      border:1px solid rgba(255,123,0,0.12);
+      cursor:pointer;
+    }
+
+    @media (max-width:520px){
+      input[type="number"]{ width:120px }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🎯 لعبة تخمين الرقم</h1>
+    <p class="lead">الكمبيوتر خَتار رقم من <strong>1</strong> إلى <strong>50</strong>. حاول تخمّنه بأقل عدد محاولات.</p>
+
+    <div class="info">
+      <div class="box">المدى: 1 - 50</div>
+      <div class="box">أعلى نتيجة (أفضل محاولة): <span id="best">-</span></div>
+    </div>
+
+    <div class="controls">
+      <input id="guessInput" type="number" min="1" max="50" placeholder="اكتب رقمك هنا" />
+      <button class="btn" id="tryBtn">حاول</button>
+      <button class="btn" id="newBtn">ابدأ جديد</button>
+    </div>
+
+    <div class="msg" id="message">حاول تخمن الرقم 😉</div>
+
+    <div class="stats">
+      <div class="stat">محاولاتك الآن: <strong id="attempts">0</strong></div>
+      <div class="stat">آخر تخمين: <strong id="last">-</strong></div>
+    </div>
+
+    <a class="back" onclick="goHome()">🏠 رجوع للصفحة الرئيسية</a>
+  </div>
+
+  <script>
+    // إعداد اللعبة
+    const MIN = 1, MAX = 50;
+    const guessInput = document.getElementById('guessInput');
+    const tryBtn = document.getElementById('tryBtn');
+    const newBtn = document.getElementById('newBtn');
+    const message = document.getElementById('message');
+    const attemptsEl = document.getElementById('attempts');
+    const lastEl = document.getElementById('last');
+    const bestEl = document.getElementById('best');
+
+    // نخزن أفضل نتيجة في localStorage باسم 'guessBest'
+    const BEST_KEY = 'guessBest';
+
+    let secret, attempts, finished;
+
+    function startGame(){
+      secret = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+      attempts = 0;
+      finished = false;
+      attemptsEl.textContent = attempts;
+      lastEl.textContent = '-';
+      message.textContent = 'اللعبة جاهزة! اكتب رقم واضغط "حاول".';
+      message.className = 'msg';
+      guessInput.value = '';
+      guessInput.disabled = false;
+      tryBtn.disabled = false;
+      guessInput.focus();
+
+      // عرض أفضل نتيجة لو موجودة
+      const best = localStorage.getItem(BEST_KEY);
+      bestEl.textContent = best ? best + ' محاولة' : '-';
+    }
+
+    function showMessage(txt, cls){
+      message.textContent = txt;
+      message.className = 'msg ' + (cls || '');
+    }
+
+    function doGuess(){
+      if (finished) return;
+      const value = parseInt(guessInput.value, 10);
+      if (!value || value < MIN || value > MAX) {
+        showMessage(اكتب رقم بين ${MIN} و ${MAX}, 'hint-wrong');
+        return;
+      }
+      attempts++;
+      attemptsEl.textContent = attempts;
+      lastEl.textContent = value;
+
+      if (value === secret) {
+        showMessage(🎉 صح! الرقم كان ${secret}. استخدمت ${attempts} محاولات., 'hint-high');
+        finished = true;
+        guessInput.disabled = true;
+        tryBtn.disabled = true;
+        // حفظ أفضل نتيجة (أصغر عدد محاولات)
+        const best = parseInt(localStorage.getItem(BEST_KEY) || '0', 10);
+        if (!best || attempts < best) {
+          localStorage.setItem(BEST_KEY, attempts);
+          bestEl.textContent = attempts + ' محاولة';
+          showMessage(🎉 تمام! ده أفضل رقم ليك لحد دلوقتي: ${attempts} محاولة., 'hint-high');
+        }
+        return;
+      }
+
+      // لو التخمين أقل من السرّي -> "أعلى"
+      if (value < secret) {
+        showMessage('▲ الرقم السري أكبر — جرب رقم أكبر', 'hint-low');
+      } else {
+        showMessage('▼ الرقم السري أصغر — جرب رقم أصغر', 'hint-low');
+      }
+    }
+
+    // روابط أزرار
+    tryBtn.addEventListener('click', doGuess);
+    guessInput.addEventListener('keydown', (e)=>{
+      if (e.key === 'Enter') doGuess();
+    });
+    newBtn.addEventListener('click', startGame);
+
+    function goHome(){
+      window.location.href = 'index.html';
+    }
+
+    // بداية اللعبة أول مرة
+    startGame();
+  </script>
+</body>
+</html>
